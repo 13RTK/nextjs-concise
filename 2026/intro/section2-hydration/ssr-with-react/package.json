@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node --watch server.ts"
+    "dev": "concurrently \"pn build\" \"tsx watch server.tsx\"",
+    "build": "rolldown ./client/client.tsx --file ./templates/client.js"
   },
   "keywords": [],
   "author": "",
@@ -19,11 +20,18 @@
   },
   "type": "module",
   "dependencies": {
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tsx": "^4.22.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.9.1",
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3",
+    "concurrently": "^10.0.3",
+    "rolldown": "^1.1.0",
     "typescript": "^6.0.3"
   }
 }

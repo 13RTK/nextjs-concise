@@ -1,6 +1,8 @@
 import express from 'express';
 import type { Response } from 'express';
 import { readFile } from 'fs/promises';
+import App from './components/App';
+import { renderToString } from 'react-dom/server';
 
 const app = express();
 
@@ -12,17 +14,20 @@ async function getAdvice() {
 }
 
 const htmlTemplate = await readFile('./templates/index.html', 'utf-8');
-const jsScript = await readFile('./templates/main.js', 'utf-8');
+const jsScript = await readFile('./templates/client.js', 'utf-8');
 
 app.get('/', async (_req, res: Response) => {
-  const advice = await getAdvice();
-  const renderedHTML = htmlTemplate.replace('%ADVICE%', advice);
+  // Render react component to HTML
+  const renderedReactComponent = renderToString(<App />);
 
-  res.send(renderedHTML);
+  // Replace %CONTENT% with rendered react component
+  const html = htmlTemplate.replace('%CONTENT%', renderedReactComponent);
+
+  res.send(html);
 });
 
-app.get('/main.js', (_req, res) => {
-  res.send(jsScript);
+app.get('/client.js', (_req, res: Response) => {
+  res.contentType('application/javascript').send(jsScript);
 });
 
 app.listen(3000, () => {

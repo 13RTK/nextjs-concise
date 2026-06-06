@@ -23,7 +23,7 @@ function App() {
       <h1>CSR Advice</h1>
 
       <p>{isLoading ? 'Loading...' : advice}</p>
-      <button type='submit' disabled={isLoading}>
+      <button onClick={getAdvice} type='submit' disabled={isLoading}>
         Get Advice
       </button>
     </>

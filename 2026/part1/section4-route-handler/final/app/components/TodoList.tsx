@@ -1,6 +1,6 @@
 async function TodoList() {
   async function getTodos() {
-    const res = await fetch('http://localhost:4000/todos');
+    const res = await fetch('http://localhost:3000/api/todos');
     const todos = await res.json();
 
     await new Promise((resolve) => setTimeout(resolve, 5000));

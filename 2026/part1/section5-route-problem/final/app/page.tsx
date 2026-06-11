@@ -1,4 +1,4 @@
-import TodoList from '@/app/components/TodoList';
+import TodoList from '@/app/_components/TodoList';
 import Loading from '@/app/loading';
 import { Suspense } from 'react';
 

@@ -3,8 +3,6 @@ async function TodoList() {
     const res = await fetch('http://localhost:3000/api/todos');
     const todos = await res.json();
 
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-
     return todos;
   }
 

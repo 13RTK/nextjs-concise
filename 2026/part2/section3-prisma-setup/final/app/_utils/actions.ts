@@ -1,6 +1,6 @@
 'use server';
 
-import { Todo } from '@/app/_types/Todo';
+import { TodoModel } from '@/app/generated/prisma/models';
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 
@@ -27,7 +27,7 @@ export async function toggleTodoComplete(id: number) {
   await writeFile(todoDataFilePath, JSON.stringify({ todos: updatedTodos }));
 }
 
-async function getTodosData(): Promise<Todo[]> {
+async function getTodosData(): Promise<TodoModel[]> {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   const jsonString = await readFile(todoDataFilePath, 'utf-8');

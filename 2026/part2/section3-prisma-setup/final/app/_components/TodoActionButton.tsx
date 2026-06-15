@@ -1,9 +1,9 @@
 'use client';
 
-import { Todo } from '@/app/_types/Todo';
+import { TodoModel } from '@/app/generated/prisma/models';
 import { useFormStatus } from 'react-dom';
 
-function TodoActionButton({ todo }: { todo: Todo }) {
+function TodoActionButton({ todo }: { todo: TodoModel }) {
   const { pending } = useFormStatus();
 
   return (

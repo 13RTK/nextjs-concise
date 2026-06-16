@@ -1,30 +1,43 @@
 'use server';
 
+import prisma from '@/app/_utils/prisma';
 import { TodoModel } from '@/app/generated/prisma/models';
-import { readFile, writeFile } from 'fs/promises';
+import { readFile } from 'fs/promises';
+import { revalidatePath } from 'next/cache';
 import path from 'path';
 
 const todoDataFilePath = path.join(process.cwd(), 'app/_data/todos.json');
 
 export async function getTodos() {
-  return await getTodosData();
+  return await prisma.todo.findMany();
 }
 
 export async function toggleTodoComplete(id: number) {
-  const todos = await getTodosData();
+  const transaction = prisma.$transaction(async (tx) => {
+    const todo = await tx.todo.findFirst({
+      where: {
+        id,
+      },
+    });
 
-  const updatedTodos = todos.map((todo) => {
-    if (todo.id === id) {
-      return {
-        ...todo,
-        completed: !todo.completed,
-      };
+    if (!todo) {
+      throw new Error('Todo not found');
     }
 
-    return todo;
+    await tx.todo.update({
+      where: {
+        id,
+      },
+
+      data: {
+        completed: !todo.completed,
+      },
+    });
+
+    revalidatePath('/');
   });
 
-  await writeFile(todoDataFilePath, JSON.stringify({ todos: updatedTodos }));
+  return transaction;
 }
 
 async function getTodosData(): Promise<TodoModel[]> {

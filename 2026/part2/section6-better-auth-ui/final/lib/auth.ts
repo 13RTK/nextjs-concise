@@ -11,4 +11,12 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+
+  advanced: {
+    database: {
+      // generateId: () => {
+      //   return crypto.randomUUIDv7();
+      // },
+    },
+  },
 });

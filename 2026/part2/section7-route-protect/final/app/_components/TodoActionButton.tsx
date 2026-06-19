@@ -1,19 +1,23 @@
 'use client';
 
 import { TodoModel } from '@/app/generated/prisma/models';
+import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { useFormStatus } from 'react-dom';
 
 function TodoActionButton({ todo }: { todo: TodoModel }) {
   const { pending } = useFormStatus();
 
   return (
-    <button
+    <Button
+      className='rounded-full'
       type='submit'
       disabled={pending}
-      className={`border-blue-600 border-2 rounded hover:border-blue-300 ${pending ? 'border-white hover:border-white' : ''}`}
+      variant='outline'
     >
+      {pending && <Spinner data-icon='inline-start' />}
       {todo.completed ? 'Undo' : 'Done'}
-    </button>
+    </Button>
   );
 }
 

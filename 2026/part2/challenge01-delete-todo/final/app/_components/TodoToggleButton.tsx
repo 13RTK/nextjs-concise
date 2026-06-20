@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { useFormStatus } from 'react-dom';
 
-function TodoActionButton({ todo }: { todo: TodoModel }) {
+function TodoToggleButton({ todo }: { todo: TodoModel }) {
   const { pending } = useFormStatus();
 
   return (
@@ -16,9 +16,9 @@ function TodoActionButton({ todo }: { todo: TodoModel }) {
       variant='outline'
     >
       {pending && <Spinner data-icon='inline-start' />}
-      {todo.completed ? 'Undo' : 'Done'}
+      {!pending && (todo.completed ? 'Undo' : 'Done')}
     </Button>
   );
 }
 
-export default TodoActionButton;
+export default TodoToggleButton;

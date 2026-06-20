@@ -1,4 +1,5 @@
-import TodoActionButton from '@/app/_components/TodoActionButton';
+import TodoDeleteButton from '@/app/_components/TodoDeleteButton';
+import TodoToggleButton from '@/app/_components/TodoToggleButton';
 import { getTodos, toggleTodoComplete } from '@/app/_utils/actions';
 
 async function TodoList() {
@@ -16,7 +17,8 @@ async function TodoList() {
             {todo.text}
           </li>
 
-          <TodoActionButton todo={todo} />
+          <TodoToggleButton todo={todo} />
+          <TodoDeleteButton todo={todo} />
         </form>
       ))}
     </ul>

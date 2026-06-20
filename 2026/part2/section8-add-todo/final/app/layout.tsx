@@ -3,7 +3,7 @@ import { JetBrains_Mono } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
 import { ThemeProvider } from 'next-themes';
-// import { Header } from '@/components/header';
+import { RscBoundaryProvider } from '@rsc-boundary/next';
 import { Providers } from '@/components/providers';
 import { Navbar } from '@/app/_components/Navbar';
 import SignedIn from '@/app/_components/SignedIn';
@@ -32,10 +32,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Providers>
-            <SignedIn>
-              <Navbar />
-            </SignedIn>
-            {children}
+            <RscBoundaryProvider>
+              <SignedIn>
+                <Navbar />
+              </SignedIn>
+              {children}
+            </RscBoundaryProvider>
           </Providers>
         </ThemeProvider>
       </body>

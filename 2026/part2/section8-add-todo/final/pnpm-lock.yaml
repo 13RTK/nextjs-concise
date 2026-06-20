@@ -35,6 +35,9 @@ importers:
       '@react-email/components':
         specifier: ^1.0.12
         version: 1.0.12(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@rsc-boundary/next':
+        specifier: ^0.3.2
+        version: 0.3.2(next@16.2.7(@babel/core@7.29.7)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/react-pacer':
         specifier: ^0.22.1
         version: 0.22.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -1284,6 +1287,22 @@ packages:
     deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     peerDependencies:
       react: ^18.0 || ^19.0 || ^19.0.0-rc
+
+  '@rsc-boundary/core@0.3.2':
+    resolution: {integrity: sha512-YqBuc8LErGjSxZIM9VvHc7KYjeA60e7WIoRT1OPgEBL/jbOpPhTEl1RBqDmY0tF2o5f8QJxj4J55Z1vz1+HbWA==}
+    peerDependencies:
+      react: ^19.0.0
+      react-dom: ^19.0.0
+
+  '@rsc-boundary/next@0.3.2':
+    resolution: {integrity: sha512-3xGMvk8d2LtRb+aKalwPiccMlX0PlVMtCRG96Jm/9PB+jm768+b04sf2mzgQ9cx31EHZCQX+0nh+vDZIVcLhjA==}
+    peerDependencies:
+      next: ^16.0.0
+      react: ^19.0.0
+      react-dom: ^19.0.0
+    peerDependenciesMeta:
+      next:
+        optional: true
 
   '@sec-ant/readable-stream@0.4.1':
     resolution: {integrity: sha512-831qok9r2t8AlxLko40y2ebgSDhenenCatLVeW/uBtnHPyhHOvG0C7TvfgecV+wHzIm5KUICgzmVpWS+IMEAeg==}
@@ -4357,6 +4376,19 @@ snapshots:
   '@react-email/text@0.1.6(react@19.2.4)':
     dependencies:
       react: 19.2.4
+
+  '@rsc-boundary/core@0.3.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+
+  '@rsc-boundary/next@0.3.2(next@16.2.7(@babel/core@7.29.7)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@rsc-boundary/core': 0.3.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+    optionalDependencies:
+      next: 16.2.7(@babel/core@7.29.7)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
 
   '@sec-ant/readable-stream@0.4.1': {}
 

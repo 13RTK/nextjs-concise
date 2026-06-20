@@ -1,6 +1,7 @@
 'use server';
 
 import prisma from '@/app/_utils/prisma';
+import { TodoCreateInput } from '@/app/generated/prisma/models';
 import { revalidatePath } from 'next/cache';
 
 export async function getTodos() {
@@ -35,6 +36,18 @@ export async function toggleTodoComplete(id: number) {
   return transaction;
 }
 
+export async function addTodo(formData: FormData) {
+  const todoCreateInput: TodoCreateInput = {
+    text: formData.get('text') as string,
+    completed: false,
+  };
+
+  await prisma.todo.create({
+    data: todoCreateInput,
+  });
+
+  revalidatePath('/');
+}
 export async function deleteTodo(id: number) {
   await prisma.todo.delete({
     where: {

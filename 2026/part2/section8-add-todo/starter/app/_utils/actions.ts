@@ -1,12 +1,7 @@
 'use server';
 
 import prisma from '@/app/_utils/prisma';
-import { TodoModel } from '@/app/generated/prisma/models';
-import { readFile } from 'fs/promises';
 import { revalidatePath } from 'next/cache';
-import path from 'path';
-
-const todoDataFilePath = path.join(process.cwd(), 'app/_data/todos.json');
 
 export async function getTodos() {
   return await prisma.todo.findMany();
@@ -40,12 +35,12 @@ export async function toggleTodoComplete(id: number) {
   return transaction;
 }
 
-async function getTodosData(): Promise<TodoModel[]> {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+export async function deleteTodo(id: number) {
+  await prisma.todo.delete({
+    where: {
+      id,
+    },
+  });
 
-  const jsonString = await readFile(todoDataFilePath, 'utf-8');
-
-  const { todos } = JSON.parse(jsonString);
-
-  return todos;
+  revalidatePath('/');
 }

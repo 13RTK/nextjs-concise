@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils';
 import { ThemeProvider } from 'next-themes';
 // import { Header } from '@/components/header';
 import { Providers } from '@/components/providers';
+import { Navbar } from '@/app/_components/Navbar';
+import SignedIn from '@/app/_components/SignedIn';
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -29,7 +31,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Providers>{children}</Providers>
+          <Providers>
+            <SignedIn>
+              <Navbar />
+            </SignedIn>
+            {children}
+          </Providers>
         </ThemeProvider>
       </body>
     </html>

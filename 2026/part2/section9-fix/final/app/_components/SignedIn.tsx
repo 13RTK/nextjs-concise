@@ -1,10 +1,14 @@
-import { auth } from '@/lib/auth';
-import { headers } from 'next/headers';
+'use client';
 
-async function SignedIn({ children }: { children: React.ReactNode }) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+import { Skeleton } from '@/components/ui/skeleton';
+import { authClient } from '@/lib/auth-client';
+
+function SignedIn({ children }: { children: React.ReactNode }) {
+  const { data: session, isPending } = authClient.useSession();
+
+  if (isPending) {
+    return <Skeleton className='h-15' />;
+  }
 
   if (!session) {
     return null;

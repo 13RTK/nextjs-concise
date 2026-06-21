@@ -14,8 +14,9 @@ export function Navbar() {
   return (
     <NavigationMenu className='bg-blue-100'>
       <NavigationMenuList>
-        <NavigationMenuItem>
+        <NavigationMenuItem className='justify-center'>
           <NavigationMenuLink
+            className='w-fit h-full'
             render={<Link href='/'>Home</Link>}
           ></NavigationMenuLink>
         </NavigationMenuItem>

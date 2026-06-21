@@ -24,7 +24,7 @@ export default function RootLayout({
       suppressHydrationWarning
       className={cn('font-mono', jetbrainsMono.variable)}
     >
-      <body className='antialiased min-h-svh flex flex-col'>
+      <body className='antialiased min-h-dvh flex flex-col'>
         <ThemeProvider
           attribute='class'
           defaultTheme='system'
@@ -36,7 +36,8 @@ export default function RootLayout({
               <SignedIn>
                 <Navbar />
               </SignedIn>
-              {children}
+
+              <main className='flex flex-1 flex-col min-h-0'>{children}</main>
             </RscBoundaryProvider>
           </Providers>
         </ThemeProvider>

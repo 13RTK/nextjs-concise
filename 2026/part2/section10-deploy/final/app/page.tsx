@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 
 export default function Page() {
   return (
-    <main className='text-center'>
+    <section className='flex flex-1 flex-col text-center'>
       <h1 className='text-6xl font-serif'>TODOS</h1>
       <hr />
 
@@ -14,6 +14,6 @@ export default function Page() {
       <Suspense fallback={<Loading />}>
         <TodoList />
       </Suspense>
-    </main>
+    </section>
   );
 }

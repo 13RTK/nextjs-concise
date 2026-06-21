@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:server": "json-server ./data/todos.json --port 4000",
     "build": "next build",
     "start": "next start"
   },

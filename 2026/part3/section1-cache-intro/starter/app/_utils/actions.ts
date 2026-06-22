@@ -1,5 +1,6 @@
 'use server';
 
+import { News } from '@/app/_types/News';
 import prisma from '@/app/_utils/prisma';
 import { TodoCreateInput } from '@/app/generated/prisma/models';
 import { revalidatePath } from 'next/cache';
@@ -48,6 +49,7 @@ export async function addTodo(formData: FormData) {
 
   revalidatePath('/');
 }
+
 export async function deleteTodo(id: number) {
   await prisma.todo.delete({
     where: {
@@ -56,4 +58,16 @@ export async function deleteTodo(id: number) {
   });
 
   revalidatePath('/');
+}
+
+export async function getNews(): Promise<News[]> {
+  const NEWS_API_KEY = '';
+
+  const response = await fetch(
+    `https://newsapi.org/v2/everything?q=bitcoin&apiKey=${NEWS_API_KEY}`,
+  );
+
+  const data = await response.json();
+
+  return data.articles.slice(0, 5);
 }

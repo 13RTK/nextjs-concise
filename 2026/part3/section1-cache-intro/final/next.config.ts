@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   experimental: {
     turbopackFileSystemCacheForDev: false,
   },
+
+  cacheComponents: true,
 };
 
 export default nextConfig;

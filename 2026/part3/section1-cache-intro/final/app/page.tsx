@@ -1,3 +1,4 @@
+import { NewsList } from '@/app/_components/NewsList';
 import TodoAddForm from '@/app/_components/TodoAddForm';
 import TodoList from '@/app/_components/TodoList';
 import Loading from '@/app/loading';
@@ -13,6 +14,12 @@ export default function Page() {
 
       <Suspense fallback={<Loading />}>
         <TodoList />
+      </Suspense>
+
+      <hr />
+
+      <Suspense fallback={<Loading />}>
+        <NewsList />
       </Suspense>
     </section>
   );

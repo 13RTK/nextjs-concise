@@ -3,9 +3,14 @@
 import { News } from '@/app/_types/News';
 import prisma from '@/app/_utils/prisma';
 import { TodoCreateInput } from '@/app/generated/prisma/models';
-import { revalidatePath } from 'next/cache';
+
+import { cacheLife, cacheTag, revalidatePath, updateTag } from 'next/cache';
 
 export async function getTodos() {
+  'use cache';
+  cacheLife('hours');
+  cacheTag('todos');
+
   return await prisma.todo.findMany();
 }
 
@@ -31,7 +36,7 @@ export async function toggleTodoComplete(id: number) {
       },
     });
 
-    revalidatePath('/');
+    updateTag('todos');
   });
 
   return transaction;
@@ -47,7 +52,7 @@ export async function addTodo(formData: FormData) {
     data: todoCreateInput,
   });
 
-  revalidatePath('/');
+  updateTag('todos');
 }
 
 export async function deleteTodo(id: number) {
@@ -57,11 +62,15 @@ export async function deleteTodo(id: number) {
     },
   });
 
-  revalidatePath('/');
+  updateTag('todos');
 }
 
 export async function getNews(): Promise<News[]> {
-  const NEWS_API_KEY = '';
+  'use cache';
+  cacheLife('hours');
+  cacheTag('news');
+
+  const NEWS_API_KEY = 'YOUR_API_KEY';
 
   const response = await fetch(
     `https://newsapi.org/v2/everything?q=bitcoin&apiKey=${NEWS_API_KEY}`,

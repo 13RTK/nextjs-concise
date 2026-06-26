@@ -3,7 +3,11 @@ import TodoToggleButton from '@/app/_components/TodoToggleButton';
 import { getTodos, toggleTodoComplete } from '@/app/_utils/actions';
 
 async function TodoList() {
+  'use cache';
+
   const todos = await getTodos();
+
+  console.log('Get TODOS in TodoList component');
 
   return (
     <ul>

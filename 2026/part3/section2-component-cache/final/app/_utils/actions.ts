@@ -4,12 +4,14 @@ import { News } from '@/app/_types/News';
 import prisma from '@/app/_utils/prisma';
 import { TodoCreateInput } from '@/app/generated/prisma/models';
 
-import { cacheLife, cacheTag, revalidatePath, updateTag } from 'next/cache';
+import { cacheLife, cacheTag, updateTag } from 'next/cache';
 
 export async function getTodos() {
-  'use cache';
-  cacheLife('hours');
+  // 'use cache';
+  // cacheLife('hours');
   cacheTag('todos');
+
+  console.log('getTodos in server action');
 
   return await prisma.todo.findMany();
 }
@@ -66,8 +68,8 @@ export async function deleteTodo(id: number) {
 }
 
 export async function getNews(): Promise<News[]> {
-  'use cache';
-  cacheLife('hours');
+  // 'use cache';
+  // cacheLife('hours');
   cacheTag('news');
 
   const NEWS_API_KEY = 'YOUR_API_KEY';

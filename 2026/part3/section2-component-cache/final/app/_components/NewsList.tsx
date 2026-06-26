@@ -2,6 +2,8 @@ import NewsListItem from '@/app/_components/NewsListItem';
 import { getNews } from '@/app/_utils/actions';
 
 export async function NewsList() {
+  'use cache';
+
   const news = await getNews();
 
   return (

@@ -1,3 +1,4 @@
+import prisma from '@/app/_utils/prisma';
 import { STATUS_CODES } from 'node:http';
 import * as v from 'valibot';
 
@@ -26,13 +27,29 @@ export async function GET(
       },
     );
   }
-  // TODO: can't find matched record, return not found with 404 status code
+
+  const { urlCode } = v.parse(UrlCodeSchema, paramsObject);
+  const urlRecord = await prisma.urlRecord.findFirst({
+    where: { urlCode },
+  });
+
+  if (!urlRecord) {
+    return Response.json(
+      {
+        statusCode: 404,
+        message: STATUS_CODES[404],
+      },
+      {
+        status: 404,
+      },
+    );
+  }
 
   return Response.json(
     {
       statusCode: 200,
       message: STATUS_CODES[200],
-      data: paramsObject,
+      data: urlRecord,
     },
     {
       status: 200,

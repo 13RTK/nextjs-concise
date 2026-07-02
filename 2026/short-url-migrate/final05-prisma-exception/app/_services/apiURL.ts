@@ -6,8 +6,6 @@ export async function createShortURL(
   originURL: string,
   urlCode?: string,
 ): Promise<APIResponse> {
-  console.log(API_URL);
-
   const response = await fetch(`${API_URL}/urlRecord`, {
     method: 'POST',
     headers: {

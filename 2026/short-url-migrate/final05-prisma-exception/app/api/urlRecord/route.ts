@@ -1,4 +1,5 @@
 import prisma from '@/app/_utils/prisma';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 import { STATUS_CODES } from 'node:http';
 import * as v from 'valibot';
 
@@ -28,21 +29,7 @@ export async function POST(request: Request) {
 
   // Check if url code is provided
   if (urlRecordCreate.urlCode) {
-    const urlRecord = await prisma.urlRecord.findFirst({
-      where: {
-        urlCode: urlRecordCreate.urlCode,
-      },
-    });
-
-    // Get duplicated record, return existing record with 200 status code
-    if (urlRecord) {
-      return Response.json({
-        statusCode: 200,
-        message: STATUS_CODES[200],
-        data: urlRecord,
-      });
-    }
-
+    // Try to create url record with custom url code
     return await createNewUrlRecord(
       urlRecordCreate.originURL,
       urlRecordCreate.urlCode,
@@ -69,22 +56,42 @@ export async function POST(request: Request) {
 }
 
 async function createNewUrlRecord(originURL: string, urlCode: string) {
-  const newUrlRecord = await prisma.urlRecord.create({
-    data: {
-      originURL,
-      shortURL: `${process.env.PROJECT_URL}/${urlCode}`,
-      urlCode,
-    },
-  });
+  try {
+    const newUrlRecord = await prisma.urlRecord.create({
+      data: {
+        originURL,
+        shortURL: `${process.env.PROJECT_URL}/${urlCode}`,
+        urlCode,
+      },
+    });
 
-  return Response.json(
-    {
-      statusCode: 201,
-      message: STATUS_CODES[201],
-      data: newUrlRecord,
-    },
-    {
-      status: 201,
-    },
-  );
+    return Response.json(
+      {
+        statusCode: 201,
+        message: STATUS_CODES[201],
+        data: newUrlRecord,
+      },
+      {
+        status: 201,
+      },
+    );
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (error.code === 'P2002') {
+        return Response.json(
+          {
+            statusCode: 400,
+            message:
+              STATUS_CODES[400] +
+              ': ' +
+              'Unique constraint failed on the urlCode',
+          },
+          {
+            status: 400,
+          },
+        );
+      }
+    }
+  }
 }
